@@ -97,6 +97,8 @@ const btnScissors = document.createElement('button');
 btnScissors.classList.add('scissors');
 btnScissors.textContent = "Scissors";
 
+const btn = document.querySelector('button');
+
 bod.appendChild(btnRock);
 bod.appendChild(btnPaper);
 bod.appendChild(btnScissors);
@@ -109,26 +111,20 @@ let tie = 0;
 // game(playRound("rock", getComputerChoice()))[0];
 
 btnRock.addEventListener('click', () => {
-    const score = playScore.concat(game(playRound("rock", getComputerChoice())));
+    getScore("rock");
+});
+btnPaper.addEventListener('click', () => {
+    getScore("paper");
+});
+btnScissors.addEventListener('click', () => {
+   getScore("scissors");
+});
+
+function getScore(hand) {
+    const score = playScore.concat(game(playRound(hand, getComputerChoice())));
     playerScore += score[0];
     computerScore += score[1];
     tie += score[2];
     
     gameScore.textContent = `${playerScore}:${computerScore}, ${tie} ties`;
-});
-btnPaper.addEventListener('click', () => {
-    const score = playScore.concat(game(playRound("paper", getComputerChoice())));
-    playerScore += score[0];
-    computerScore += score[1];
-    tie += score[2];
-    
-    gameScore.textContent = `${playerScore}:${computerScore}, ${tie} ties`;});
-btnScissors.addEventListener('click', () => {
-    const score = playScore.concat(game(playRound("scissors", getComputerChoice())));
-    playerScore += score[0];
-    computerScore += score[1];
-    tie += score[2];
-    
-    gameScore.textContent = `${playerScore}:${computerScore}, ${tie} ties`;});
-
-console.log(playerScore);
+}
