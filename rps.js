@@ -114,11 +114,21 @@ btnRock.addEventListener('click', () => {
     computerScore += score[1];
     tie += score[2];
     
-    gameScore.textContent = `${playerScore}, ${computerScore}, ${tie}`;
+    gameScore.textContent = `${playerScore}:${computerScore}, ${tie} ties`;
 });
 btnPaper.addEventListener('click', () => {
-    game(playRound("paper", getComputerChoice()));
-});
+    const score = playScore.concat(game(playRound("paper", getComputerChoice())));
+    playerScore += score[0];
+    computerScore += score[1];
+    tie += score[2];
+    
+    gameScore.textContent = `${playerScore}:${computerScore}, ${tie} ties`;});
 btnScissors.addEventListener('click', () => {
-    game(playRound("scissors", getComputerChoice()));
-});
+    const score = playScore.concat(game(playRound("scissors", getComputerChoice())));
+    playerScore += score[0];
+    computerScore += score[1];
+    tie += score[2];
+    
+    gameScore.textContent = `${playerScore}:${computerScore}, ${tie} ties`;});
+
+console.log(playerScore);
