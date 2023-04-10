@@ -77,12 +77,14 @@ function game(result){
 const bod = document.querySelector('body');
 const result = document.createElement("div");
 const gameScore = document.createElement("div");
+const finalResult = document.createElement("div");
 
 result.textContent = " ";
 gameScore.textContent = " ";
 
 bod.appendChild(gameScore);
 bod.appendChild(result);
+bod.appendChild(finalResult);
 
 
 const btnRock = document.createElement('button');
@@ -97,18 +99,19 @@ const btnScissors = document.createElement('button');
 btnScissors.classList.add('scissors');
 btnScissors.textContent = "Scissors";
 
-const btn = document.querySelector('button');
 
 bod.appendChild(btnRock);
 bod.appendChild(btnPaper);
 bod.appendChild(btnScissors);
 
-let playScore = [];
 let playerScore = 0;
 let computerScore = 0;
 let tie = 0;
 
 // game(playRound("rock", getComputerChoice()))[0];
+
+gameScore.textContent = `${playerScore}:${computerScore}, ${tie} ties`;
+
 
 btnRock.addEventListener('click', () => {
     getScore("rock");
@@ -121,10 +124,29 @@ btnScissors.addEventListener('click', () => {
 });
 
 function getScore(hand) {
-    const score = playScore.concat(game(playRound(hand, getComputerChoice())));
+    const playScore = [];
+    const roundStr = playRound(hand, getComputerChoice());
+    result.textContent = roundStr;
+
+    const score = playScore.concat(game(roundStr));
     playerScore += score[0];
     computerScore += score[1];
     tie += score[2];
+    
+    if (playerScore + computerScore + tie === 5) {
+        if (playerScore < computerScore) {
+            finalResult.textContent = `You Lose! Final score is: ${playerScore}:${computerScore} ${tie} ties`;
+        } else if (playerScore > computerScore) {
+            finalResult.textContent = `You Win! Final score is: ${playerScore}:${computerScore} ${tie} ties`;
+        } else {
+            finalResult.textContent = `You Tied! Final score is: ${playerScore}:${computerScore} ${tie} ties`;
+        }
+        playerScore = 0;
+        computerScore = 0;
+        tie = 0;
+    } else {
+        finalResult.textContent = "";
+    }
     
     gameScore.textContent = `${playerScore}:${computerScore}, ${tie} ties`;
 }
